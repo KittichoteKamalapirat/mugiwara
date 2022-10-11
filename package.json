@@ -4,7 +4,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock": "npx hardhat node",
+    "hardhat:compile": "npx hardhat compile",
+    "hardhat:run": "npx hardhat run scripts/sample-script.js --network localhost",
+    "test": "npx hardhat test"
   },
   "dependencies": {
     "react": "^17.0.2",
@@ -18,6 +22,7 @@
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.3",
+    "hardhat": "^2.12.0",
     "vite": "^2.7.2"
   }
 }

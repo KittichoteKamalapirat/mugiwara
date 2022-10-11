@@ -1,10 +1,9 @@
-import WalletBalance from './WalletBalance';
-import { useEffect, useState } from 'react';
+import WalletBalance from "./WalletBalance";
+import { useEffect, useState } from "react";
 
-import { ethers } from 'ethers';
-import FiredGuys from '../artifacts/contracts/MyNFT.sol/FiredGuys.json';
-
-const contractAddress = 'YOUR_DEPLOYED_CONTRACT_ADDRESS';
+import { ethers } from "ethers";
+import FiredGuys from "../artifacts/contracts/MyNFT.sol/FiredGuys.json";
+import { CONTRACT_ADDRESS, PINATA_FOLDER_ID } from "../constants";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -12,20 +11,22 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 
 // get the smart contract
-const contract = new ethers.Contract(contractAddress, FiredGuys.abi, signer);
-
+const contract = new ethers.Contract(CONTRACT_ADDRESS, FiredGuys.abi, signer);
 
 function Home() {
-
   const [totalMinted, setTotalMinted] = useState(0);
   useEffect(() => {
     getCount();
   }, []);
 
   const getCount = async () => {
-    const count = await contract.count();
-    console.log(parseInt(count));
-    setTotalMinted(parseInt(count));
+    try {
+      const count = await contract.count();
+      console.log(parseInt(count));
+      setTotalMinted(parseInt(count));
+    } catch (error) {
+      console.log("count error", error.message);
+    }
   };
 
   return (
@@ -49,41 +50,57 @@ function Home() {
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
-  const metadataURI = `${contentId}/${tokenId}.json`;
-  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
-//   const imageURI = `img/${tokenId}.png`;
+  const metadataURI = `${PINATA_FOLDER_ID}/${tokenId}.json`;
+  const imageURI = `https://gateway.pinata.cloud/ipfs/${PINATA_FOLDER_ID}/${tokenId}.png`;
+  //   const imageURI = `img/${tokenId}.png`;
 
+  console.log("imageURI", imageURI);
+  console.log("metadataURI", metadataURI);
   const [isMinted, setIsMinted] = useState(false);
   useEffect(() => {
     getMintedStatus();
   }, [isMinted]);
 
   const getMintedStatus = async () => {
-    const result = await contract.isContentOwned(metadataURI);
-    console.log(result)
-    setIsMinted(result);
+    try {
+      const result = await contract.isContentOwned(metadataURI);
+      console.log(result);
+      setIsMinted(result);
+    } catch (error) {
+      console.log("mint status error", error.message);
+    }
   };
 
   const mintToken = async () => {
     const connection = contract.connect(signer);
     const addr = connection.address;
-    const result = await contract.payToMint(addr, metadataURI, {
-      value: ethers.utils.parseEther('0.05'),
-    });
+    try {
+      const result = await contract.payToMint(addr, metadataURI, {
+        value: ethers.utils.parseEther("0.05"),
+      });
 
-    await result.wait();
-    getMintedStatus();
-    getCount();
+      await result.wait();
+      getMintedStatus();
+      getCount();
+    } catch (error) {
+      console.log("mint token error", error.message);
+    }
   };
 
   async function getURI() {
-    const uri = await contract.tokenURI(tokenId);
-    alert(uri);
+    try {
+      const uri = await contract.tokenURI(tokenId);
+      alert(uri);
+    } catch (error) {
+      console.log("get uri error", error.message);
+    }
   }
   return (
-    <div className="card" style={{ width: '18rem' }}>
-      <img className="card-img-top" src={isMinted ? imageURI : 'img/placeholder.png'}></img>
+    <div className="card" style={{ width: "18rem" }}>
+      <img
+        className="card-img-top"
+        src={isMinted ? imageURI : "img/placeholder.png"}
+      ></img>
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
         {!isMinted ? (
