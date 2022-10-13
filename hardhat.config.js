@@ -1,5 +1,9 @@
+require("dotenv").config();
 require("@nomiclabs/hardhat-waffle");
 // https://hardhat.org/guides/create-task.html
+
+const { ALCHEMY_API_URL_TEST, META_MASK_PRIVATE_KEY } = process.env;
+
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
@@ -25,10 +29,14 @@ module.exports = {
     //   url: "https://polygon-mumbai.g.alchemy.com/v2/YOUR_APP",
     //   accounts: ["MATIC_PRIVATE_KEY"]
     // }
-    hardhat: {
-      url: process.env.RPC_URL,
-      // chainId: 1337,
-      chainId: 31337,
+    // hardhat: {
+    //   url: process.env.RPC_URL,
+    //   // chainId: 1337,
+    //   chainId: 31337,
+    // },
+    goerli: {
+      url: ALCHEMY_API_URL_TEST,
+      accounts: [`0x${META_MASK_PRIVATE_KEY}`],
     },
   },
 };

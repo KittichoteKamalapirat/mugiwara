@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const { NFT_PRICE } = require("../src/constants");
 
 const TEST_ACCOUNT = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
 describe("MyNFT", function () {
@@ -15,7 +16,7 @@ describe("MyNFT", function () {
     expect(balance).to.equal(0);
 
     const newlyMintedToken = await firedguys.payToMint(recipient, metadataURI, {
-      value: ethers.utils.parseEther("0.05"),
+      value: ethers.utils.parseEther(NFT_PRICE),
     });
 
     // wait until the transaction is mined
@@ -26,7 +27,7 @@ describe("MyNFT", function () {
 
     expect(await firedguys.isContentOwned(metadataURI)).to.equal(true);
     const newlyMintedToken2 = await firedguys.payToMint(recipient, "foo", {
-      value: ethers.utils.parseEther("0.05"),
+      value: ethers.utils.parseEther(NFT_PRICE),
     });
   });
 });
