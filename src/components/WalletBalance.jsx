@@ -14,10 +14,13 @@ function WalletBalance() {
   };
 
   return (
-    <div className="card">
-      <div className="card-body">
+    <div>
+      <div>
         {!balance ? (
-          <button className="btn btn-success" onClick={() => getBalance()}>
+          <button
+            className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            onClick={() => getBalance()}
+          >
             Show My Balance
           </button>
         ) : (

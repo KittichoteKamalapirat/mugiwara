@@ -3,6 +3,8 @@ import WalletBalance from "./WalletBalance";
 import { ethers } from "ethers";
 import FiredGuys from "../artifacts/contracts/MyNFT.sol/FiredGuys.json";
 import { brandName, NFT_PRICE, PINATA_FOLDER_ID } from "../constants";
+import Hero from "./Hero";
+import Navbar from "./Navbar";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -33,18 +35,24 @@ function Home() {
 
   return (
     <div>
-      <WalletBalance />
+      <Navbar />
 
-      <h1>{brandName}</h1>
-      <div className="container">
-        <div className="row">
-          {Array(totalMinted + 1)
-            .fill(0)
-            .map((_, i) => (
-              <div key={i} className="col-sm">
-                <NFTImage tokenId={i} getCount={getCount} />
-              </div>
-            ))}
+      <Hero />
+
+      <h2 className="text-black mb-10 font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white text-center w-full">
+        Browse the collection
+      </h2>
+      <div className="mb-40">
+        <div className="container" id="browse">
+          <div className="row">
+            {Array(totalMinted + 1)
+              .fill(0)
+              .map((_, i) => (
+                <div key={i} className="col-sm">
+                  <NFTImage tokenId={i} getCount={getCount} />
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </div>
