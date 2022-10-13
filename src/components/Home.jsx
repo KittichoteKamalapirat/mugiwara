@@ -5,6 +5,7 @@ import FiredGuys from "../artifacts/contracts/MyNFT.sol/FiredGuys.json";
 import { brandName, NFT_PRICE, PINATA_FOLDER_ID } from "../constants";
 import Hero from "./Hero";
 import Navbar from "./Navbar";
+import placeholder from "../placeholder.svg";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -40,15 +41,15 @@ function Home() {
       <Hero />
 
       <h2 className="text-black mb-10 font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white text-center w-full">
-        Browse the collection
+        Mint an NFT
       </h2>
       <div className="mb-40">
         <div className="container" id="browse">
-          <div className="row">
+          <div className="grid grid-cols-3">
             {Array(totalMinted + 1)
               .fill(0)
               .map((_, i) => (
-                <div key={i} className="col-sm">
+                <div key={i} className="col-span-1">
                   <NFTImage tokenId={i} getCount={getCount} />
                 </div>
               ))}
@@ -106,7 +107,7 @@ function NFTImage({ tokenId, getCount }) {
     <div className="card" style={{ width: "18rem" }}>
       <img
         className="card-img-top"
-        src={isMinted ? imageURI : "img/placeholder.png"}
+        src={isMinted ? imageURI : placeholder}
       ></img>
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
