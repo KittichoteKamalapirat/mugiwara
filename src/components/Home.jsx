@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import WalletBalance from "./WalletBalance";
 import { ethers } from "ethers";
+import { useEffect, useState } from "react";
 import FiredGuys from "../artifacts/contracts/MyNFT.sol/FiredGuys.json";
-import { brandName, NFT_PRICE, PINATA_FOLDER_ID } from "../constants";
+import { NFT_PRICE, PINATA_FOLDER_ID } from "../constants";
+import placeholder from "../placeholder.svg";
+import Carousel from "./Carousel";
+import { Footer } from "./Footer";
 import Hero from "./Hero";
 import Navbar from "./Navbar";
-import placeholder from "../placeholder.svg";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -37,11 +38,11 @@ function Home() {
   return (
     <div>
       <Navbar />
-
       <Hero />
+      <Carousel />
 
       <h2 className="text-black mb-10 font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white text-center w-full">
-        Mint an NFT
+        Mint your own NFT
       </h2>
       <div className="mb-40">
         <div className="container" id="browse">
@@ -56,6 +57,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
@@ -105,10 +107,7 @@ function NFTImage({ tokenId, getCount }) {
   }
   return (
     <div className="card" style={{ width: "18rem" }}>
-      <img
-        className="card-img-top"
-        src={isMinted ? imageURI : placeholder}
-      ></img>
+      <img className="card-img-top" src={isMinted ? imageURI : placeholder} />
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
         {!isMinted ? (
