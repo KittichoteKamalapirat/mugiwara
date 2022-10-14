@@ -17,14 +17,16 @@ function WalletBalance() {
     <div>
       <div>
         {!balance ? (
-          <button
+          <a
             className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={() => getBalance()}
+            onClick={window.ethereum ? () => getBalance() : undefined}
+            // href={!window.ethereum ? "#install-metamask" : undefined}
+            href={window.ethereum ? undefined : "#install-metamask"}
           >
-            Show My Balance
-          </button>
+            Show my balance
+          </a>
         ) : (
-          <h5 className="card-title">Your Balance: {balance}</h5>
+          <h5 className="text-lg">Your Balance: {balance}</h5>
         )}
       </div>
     </div>

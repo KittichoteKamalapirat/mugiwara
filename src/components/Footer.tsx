@@ -4,7 +4,7 @@ import { brandName } from "../constants";
 
 interface FooterProps {}
 
-export const Footer: React.FC<FooterProps> = ({}) => {
+export const Footer = ({}) => {
   return (
     <footer className="bg-slate-800 text-center lg:text-left ">
       {/* <div className="mx-auto max-w-lg">
