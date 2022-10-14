@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import FiredGuys from "../artifacts/contracts/MyNFT.sol/FiredGuys.json";
@@ -41,22 +42,29 @@ function Home() {
       <Hero />
       <Carousel />
 
-      <h2 className="text-black mb-10 font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white text-center w-full">
-        Mint your own NFT
-      </h2>
-      <div className="mb-40">
-        <div className="container" id="browse">
-          <div className="grid grid-cols-3">
-            {Array(totalMinted + 1)
-              .fill(0)
-              .map((_, i) => (
-                <div key={i} className="col-span-1">
-                  <NFTImage tokenId={i} getCount={getCount} />
-                </div>
-              ))}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h2 className="text-black mb-10 font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white text-center w-full">
+          Mint your own NFT
+        </h2>
+        <div className="mb-40">
+          <div className="container" id="browse">
+            <div className="grid grid-cols-3">
+              {Array(totalMinted + 1)
+                .fill(0)
+                .map((_, i) => (
+                  <div key={i} className="col-span-1">
+                    <NFTImage tokenId={i} getCount={getCount} />
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
+
       <Footer />
     </div>
   );

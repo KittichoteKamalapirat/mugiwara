@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 import { brandName } from "../constants";
 
@@ -41,7 +42,13 @@ export const Footer: React.FC<FooterProps> = ({}) => {
         </div>
       </div> */}
       <div className="text-white text-center p-4 bg-slate-700">
-        © 2021 Copyright: <a href="https://shareculator.com/">{brandName}</a>
+        <motion.div
+          initial={{ opacity: 0, y: -100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          © 2021 Copyright: <a href="https://shareculator.com/">{brandName}</a>
+        </motion.div>
       </div>
     </footer>
   );
